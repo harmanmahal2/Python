@@ -35,6 +35,6 @@ class Priveleges():
 
 
 
-user = Admins("Harman", "Mahal", "jatt")
-user.describe_user()
-user.priveleges.show_priveleges()
+#user = Admins("Harman", "Mahal", "jatt")
+#user.describe_user()
+#user.priveleges.show_priveleges()
