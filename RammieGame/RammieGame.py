@@ -1,7 +1,6 @@
 import sys
 import pygame
-import self as self
-
+from bullet import Bullet
 from Settings import Settings
 from icon_rammie import Rammie
 
@@ -17,6 +16,7 @@ class RammieGame:
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Ramneet's Game")
         self.rammie = Rammie(self)
+        self.bullets = pygame.sprite.Group()
         self.bg_color = (230, 230, 230)
 
     def run_game(self):
@@ -24,6 +24,7 @@ class RammieGame:
         while True:
             self._check_events()
             self.rammie.update()
+            self.bullets.update()
             self._update_screen()
 
             # watch for keyboard and mouse events
@@ -38,6 +39,8 @@ class RammieGame:
             elif event.type == pygame.KEYUP:
                self._check_keyup_events(event)
 
+
+
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.rammie.moving_right = True
@@ -47,6 +50,10 @@ class RammieGame:
             self.rammie.moving_up = True
         elif event.key == pygame.K_DOWN:
             self.rammie.moving_down = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -58,10 +65,16 @@ class RammieGame:
         elif event.key == pygame.K_DOWN:
             self.rammie.moving_down = False
 
+    def _fire_bullet(self):
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+
     def _update_screen(self):
         """update images on the screen, and flip to new screen"""
         self.screen.fill(self.settings.bg_color)
         self.rammie.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         # Make the most recent drawn screen visible
 
