@@ -13,11 +13,12 @@ class RammieGame:
         pygame.init()
         self.settings = Settings()
 
+
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Ramneet's Game")
-        self.rammie = Rammie(self)
+        self.rammie = Rammie(self) ####this is where icon_rammie gets its resources from.
         self.bullets = pygame.sprite.Group()
-        self.bg_color = (230, 230, 230)
+
 
     def run_game(self):
         """start main loop for the game"""
@@ -25,6 +26,8 @@ class RammieGame:
             self._check_events()
             self.rammie.update()
             self.bullets.update()
+
+            #get rid of bullets
             self._update_screen()
 
             # watch for keyboard and mouse events
