@@ -3,6 +3,7 @@ import pygame
 from bullet import Bullet
 from Settings import Settings
 from icon_rammie import Rammie
+from enemy import Enemey
 
 
 class RammieGame:
@@ -18,6 +19,17 @@ class RammieGame:
         pygame.display.set_caption("Ramneet's Game")
         self.rammie = Rammie(self) ####this is where icon_rammie gets its resources from.
         self.bullets = pygame.sprite.Group()
+        self.enemy = pygame.sprite.Group()
+
+        self._create_fleet()
+
+    def _create_fleet(self):
+        #make aliens
+        enemy = Enemey(self)
+
+
+
+
 
 
     def run_game(self):
@@ -25,12 +37,16 @@ class RammieGame:
         while True:
             self._check_events()
             self.rammie.update()
-            self.bullets.update()
-
-            #get rid of bullets
+            self._update_bullets()
             self._update_screen()
 
             # watch for keyboard and mouse events
+
+
+
+
+
+
 
     def _check_events(self):
         # respond to keypress
@@ -41,6 +57,10 @@ class RammieGame:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                self._check_keyup_events(event)
+
+
+
+
 
 
 
@@ -68,9 +88,20 @@ class RammieGame:
         elif event.key == pygame.K_DOWN:
             self.rammie.moving_down = False
 
+
+
+
+
+
     def _fire_bullet(self):
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+
+
+
+
 
     def _update_screen(self):
         """update images on the screen, and flip to new screen"""
@@ -79,9 +110,35 @@ class RammieGame:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
+        self.enemy.draw(self.screen)
+
+
+
+
+
+
+
+    def _update_bullets(self):
+        self.bullets.update()
+
+        #get rid of old bullets
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
+
+
+
+
+
+
         # Make the most recent drawn screen visible
 
         pygame.display.flip()
+
+
+
+
 
 
 if __name__ == '__main__':
