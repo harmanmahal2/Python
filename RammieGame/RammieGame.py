@@ -149,16 +149,33 @@ class RammieGame:
     def _update_bullets(self):
         self.bullets.update()
 
+
         #get rid of old bullets
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+        self._check_bullet_enemy_collisions()
+
+
+
+
+    def _check_bullet_enemy_collisions(self):
+        collisions = pygame.sprite.groupcollide(self.bullets, self.enemies, True, True)
+
+        if not self.enemies:
+            self.bullets.empty()
+            self._create_fleet()
+
 
 
 
     def _update_enemy(self):
         self._check_fleet_edges()
         self.enemies.update()
+
+        if pygame.sprite.spritecollideany(self.rammie, self.enemies):
+            print("Controller hit!!!")
 
 
 
@@ -174,6 +191,7 @@ class RammieGame:
     def run_game(self):
         """start main loop for the game"""
         while True:
+
             self._check_events()
             self.rammie.update()
             self._update_bullets()
