@@ -1,9 +1,13 @@
 import sys
+from time import sleep
 import pygame
 from bullet import Bullet
 from Settings import Settings
+from game_stats import GameStats
 from icon_rammie import Rammie
 from enemy import Enemy
+
+
 
 
 class RammieGame:
@@ -17,6 +21,7 @@ class RammieGame:
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Ramneet's Game")
+        self.stats = GameStats(self)
         self.rammie = Rammie(self) ####this is where icon_rammie gets its resources from.
         self.bullets = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
@@ -168,6 +173,20 @@ class RammieGame:
             self._create_fleet()
 
 
+    def _rammie_hit(self):
+        ##respond to being hit by enemy
+        if self.stats.rammie_left > 0:
+            self.stats.rammie_left -= 1
+
+            self.enemies.empty()
+            self.bullets.empty()
+
+            self._create_fleet()
+            self.rammie.center_rammie()
+
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
 
 
     def _update_enemy(self):
@@ -175,13 +194,21 @@ class RammieGame:
         self.enemies.update()
 
         if pygame.sprite.spritecollideany(self.rammie, self.enemies):
-            print("Controller hit!!!")
+            self._rammie_hit()
 
-
+        self._check_enemies_bottom()
 
         # Make the most recent drawn screen visible
-
         pygame.display.flip()
+
+
+
+    def _check_enemies_bottom(self):
+        screen_rect = self.screen.get_rect()
+        for enemy in self.enemies.sprites():
+            if enemy.rect.bottom >= screen_rect.bottom:
+                self._rammie_hit()
+                break
 
 
 
@@ -193,10 +220,11 @@ class RammieGame:
         while True:
 
             self._check_events()
-            self.rammie.update()
-            self._update_bullets()
-            self._update_enemy()
-            self._update_screen()
+            if self.stats.game_active:
+                self.rammie.update()
+                self._update_bullets()
+                self._update_enemy()
+                self._update_screen()
 
 
 

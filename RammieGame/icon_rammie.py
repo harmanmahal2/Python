@@ -47,5 +47,9 @@ class Rammie:
         # i modifield this code to minimize the logic. Assigned float value to self.rect.x and y originally
 
 
+    def center_rammie(self):
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)
