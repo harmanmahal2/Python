@@ -35,11 +35,11 @@ class Rammie:
         if self.moving_left and self.rect.left > 0:
             self.rect.x -= self.settings.rammie_speed
 
-        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-            self.rect.y += self.settings.rammie_speed
+        #if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+           # self.rect.y += self.settings.rammie_speed
 
-        if self.moving_up and self.rect.top > self.screen_rect.top:
-            self.rect.y -= self.settings.rammie_speed
+        #if self.moving_up and self.rect.top > self.screen_rect.top:
+            #self.rect.y -= self.settings.rammie_speed
 
         #self.rect.x = self.x
         #self.rect.y = self.y

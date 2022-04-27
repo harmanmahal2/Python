@@ -3,7 +3,7 @@ import pygame
 from bullet import Bullet
 from Settings import Settings
 from icon_rammie import Rammie
-from enemy import Enemey
+from enemy import Enemy
 
 
 class RammieGame:
@@ -19,33 +19,61 @@ class RammieGame:
         pygame.display.set_caption("Ramneet's Game")
         self.rammie = Rammie(self) ####this is where icon_rammie gets its resources from.
         self.bullets = pygame.sprite.Group()
-        self.enemy = pygame.sprite.Group()
-
+        self.enemies = pygame.sprite.Group()
         self._create_fleet()
+
+
+
+
+
 
     def _create_fleet(self):
         #make aliens
-        enemy = Enemey(self)
+        enemy = Enemy(self)
+        enemy_width, enemy_height = enemy.rect.size
+        available_space_x = self.settings.screen_width - (2 * enemy_width)
+        number_enemies_x = available_space_x // (2 * enemy_width)
+
+
+            #determine number of rows
+
+        rammie_height = self.rammie.rect.height
+        available_space_y = (self.settings.screen_height - (3 * enemy_height) - rammie_height)
+        number_rows = available_space_y // (2 * enemy_height)
+
+        for row_number in range(number_rows):
+            for enemy_number in range(number_enemies_x):
+                self._create_enemy(enemy_number, row_number)
+
+        #create the first row of aliens
+
+
+    def _create_enemy(self, enemy_number, row_number):
+
+            enemy = Enemy(self)
+            enemy_width, enemy_height = enemy.rect.size
+            enemy.x = enemy_width + 2 * enemy_width * enemy_number
+            enemy.rect.x = enemy.x
+            enemy.rect.y = enemy.rect.height + 2 * enemy.rect.height * row_number
+            self.enemies.add(enemy)
 
 
 
+    def _check_fleet_edges(self):
+        ##respond app. if enemies touch the edge"
+        for enemy in self.enemies.sprites():
+            if enemy.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        for enemy in self.enemies.sprites():
+            enemy.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
 
 
-
-    def run_game(self):
-        """start main loop for the game"""
-        while True:
-            self._check_events()
-            self.rammie.update()
-            self._update_bullets()
-            self._update_screen()
 
             # watch for keyboard and mouse events
-
-
-
-
-
 
 
     def _check_events(self):
@@ -110,7 +138,7 @@ class RammieGame:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
-        self.enemy.draw(self.screen)
+        self.enemies.draw(self.screen)
 
 
 
@@ -128,7 +156,9 @@ class RammieGame:
 
 
 
-
+    def _update_enemy(self):
+        self._check_fleet_edges()
+        self.enemies.update()
 
 
 
@@ -137,6 +167,18 @@ class RammieGame:
         pygame.display.flip()
 
 
+
+
+
+
+    def run_game(self):
+        """start main loop for the game"""
+        while True:
+            self._check_events()
+            self.rammie.update()
+            self._update_bullets()
+            self._update_enemy()
+            self._update_screen()
 
 
 
