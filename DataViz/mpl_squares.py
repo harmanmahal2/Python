@@ -2,15 +2,12 @@ import matplotlib.pyplot as plt
 plt.style.available
 
 input_values = [1,5,10,15,20,25,30]
-squares = []
+squares = [each**2 for each in input_values]
 
-for each in input_values:
-    sq = each * each
-    squares.append(sq)
 
 plt.style.use('fivethirtyeight')
 fig, ax = plt.subplots()
-ax.plot(input_values,squares, linewidth=3)
+ax.plot(input_values,squares,c='blue',linewidth=3)
 
 #set chart title and label axes
 
