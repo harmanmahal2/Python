@@ -73,7 +73,7 @@ def registerPage(request):
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-    rooms =  Room.objects.filter(
+    rooms = Room.objects.filter(
         Q(topic__name__icontains = q ) |
         Q(name__icontains = q) |
         Q(description__icontains = q)
@@ -81,7 +81,11 @@ def home(request):
     ##these two lines make sure it searches for what search query contains
     topics = Topic.objects.all()
     room_count = rooms.count()
-    context = {'rooms':rooms, 'topics': topics,'room_count': room_count}
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))###.reverse()[:5] only for last 5 results <<<##when clicking on topics, on recent activity it will only show the topic we clicked on
+
+    context = {'rooms':rooms, 'topics': topics,
+               'room_count': room_count,
+               'room_messages': room_messages}
     return render(request, 'base/home.html', context)
 
 
@@ -100,6 +104,15 @@ def room(request, pk):
 
     context = {'room': room, 'room_messages': room_messages, 'participants': participants}
     return render(request, 'base/room.html', context)
+
+
+
+@login_required(login_url='login') ###to restrict pages
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    context = {'user':user}
+    return render(request, 'base/profile.html', context)
+
 
 
 
@@ -154,6 +167,7 @@ def deleteRoom(request, pk):
 @login_required(login_url='login')
 def deleteMessage(request, pk):
     message = Message.objects.get(id=pk)
+
 
     if request.user != message.user:
         return HttpResponse('You are not allowed here!!!')
