@@ -42,7 +42,7 @@ def loginPage(request):
         else:
             messages.error(request, 'Username/Password does not exist ')
 
-    context = {'page' : page}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 
@@ -81,7 +81,7 @@ def home(request):
     ##these two lines make sure it searches for what search query contains
     topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))###.reverse()[:5] only for last 5 results <<<##when clicking on topics, on recent activity it will only show the topic we clicked on
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))##.reverse()[:5] ##only for last 5 results <<<##when clicking on topics, on recent activity it will only show the topic we clicked on
 
     context = {'rooms':rooms, 'topics': topics,
                'room_count': room_count,
@@ -123,6 +123,7 @@ def userProfile(request, pk):
 @login_required(login_url='login') ###to restrict pages
 def createRoom(request):
     form = RoomForm()
+
     if request.method == 'POST':
         form = RoomForm(request.POST)
         if form.is_valid():
