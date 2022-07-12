@@ -1,10 +1,12 @@
+{% extends 'main.html' %}
+
 
 
 {% block content %}
-
+<main class="layout layout--3">
 <body>
 
-<!-- {% if page == 'login' %} -->
+<!--{% if page == 'login' %} -->
 <div>
   <form method="POST" action="">
     {% csrf_token %}
@@ -24,7 +26,7 @@
   <a href="{% url 'register' %}"> Sign up</a>
 </div>
 
-<!--{% else %} -->
+<!-- {% else %} -->
 
 
 <div>
@@ -39,7 +41,7 @@
 </div>
 
 </body>
+</main>
 
 {% endif %}
-
 {% endblock  %}
