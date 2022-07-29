@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Teams </h1>
+    <p>
+        {% for team in teams %}
+
+        <li>
+            <a href="{% url 'match_results:team' team.id %}">{{ team }}</a>
+        </li>
+
+        {% empty %}
+
+        <p>
+            No team has been added yet.
+        </p>
+
+
+        {% endfor %}
+
+
+    </p>
+
+
+</h1>
+
+{% endblock %}

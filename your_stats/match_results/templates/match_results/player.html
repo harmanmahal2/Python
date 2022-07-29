@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2> Player: {{ player }} </h2>
+
+     <br>
+
+    <ul>
+        <li> Full Name : {{ player.player_name }} </li>
+        <li> Player Number : {{ player.player_number }} </li>
+        <li> Player Nation : {{ player.player_nation }} </li>
+
+    </ul>
+
+
+{% endblock %}

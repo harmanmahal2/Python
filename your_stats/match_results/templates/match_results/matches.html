@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Matches </h1>
+    <p>
+        {% for match in matches %}
+
+        <li>
+            <a href="{% url 'match_results:match' match.id %}">{{ match }}</a>
+        </li>
+
+        {% empty %}
+
+        <p>
+            No match has been added yet.
+        </p>
+
+
+        {% endfor %}
+
+
+    </p>
+
+
+</h1>
+
+{% endblock %}

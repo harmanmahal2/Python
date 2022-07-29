@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2> Team: {{ team }} </h2>
+
+     <br>
+
+    <h3> Players: </h3>
+
+
+        <ul>
+        {% for player in players %}
+            <li>
+                <a href="{% url 'match_results:player' player.id %}">{{ player }}</a>
+            </li>
+
+        {% empty %}
+            <li> There are no players added for this team.</li>
+        {% endfor %}
+        </uL>
+
+
+{% endblock %}

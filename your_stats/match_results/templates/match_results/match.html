@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2> {{ match }} </h2>
+
+        <p>
+            {{ match.league }}
+
+        </p>
+
+        <p>
+            <table>
+              <tr>
+                <th>Stats</th>
+                <th>
+                    <a href="{% url 'match_results:team' home_team.id %}">{{ match.home_team }}</a>
+                <th>
+                  <a href="{% url 'match_results:team' away_team.id %}">{{ match.away_team }}</a>
+              </tr>
+              <tr>
+                <td>Goals</td>
+                <td>{{total_home_goals}}</td>
+                <td>{{total_away_goals}}</td>
+              </tr>
+              <tr>
+                <td>Shots</td>
+                <td>{{home_team_shots}}</td>
+                <td>{{away_team_shots}}</td>
+              </tr>
+                <tr>
+                <td>Shots on Target</td>
+                <td>{{home_team_shots_on_target}}</td>
+                <td>{{away_team_shots_on_target}}</td>
+              </tr>
+                 <tr>
+                <td>Possession</td>
+                <td>{{home_team_possession}}</td>
+                <td>{{away_team_possession}}</td>
+              </tr>
+            </table>
+
+        </p>
+
+
+{% endblock %}
