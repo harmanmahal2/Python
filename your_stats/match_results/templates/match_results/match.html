@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load mathfilters %}
+
 <h2> {{ match }} </h2>
 
         <p>
@@ -37,6 +39,41 @@
                 <td>Possession</td>
                 <td>{{home_team_possession}}</td>
                 <td>{{away_team_possession}}</td>
+              </tr>
+                <tr>
+                <td>Passes</td>
+                <td>{{home_team_passes.total_passes}}</td>
+                <td>{{away_team_passes.total_passes}}</td>
+              </tr>
+                <tr>
+                <td>Successful Passes</td>
+                <td>{{home_team_completed_passes.total_completed_passes|div:home_team_passes.total_passes|mul:100|floatformat:0}}%</td>
+                <td>{{away_team_completed_passes.total_completed_passes|div:away_team_passes.total_passes|mul:100|floatformat:0}}%</td>
+              </tr>
+                <tr>
+                <td>Fouls</td>
+                <td>{{home_team_fouls.total_fouls}}</td>
+                <td>{{away_team_fouls.total_fouls}}</td>
+              </tr>
+                <tr>
+                <td>Yellow Cards</td>
+                <td>{{home_team_yellow_cards}}</td>
+                <td>{{away_team_yellow_cards}}</td>
+              </tr>
+                <tr>
+                <td>Red Cards</td>
+                <td>{{home_team_red_cards}}</td>
+                <td>{{away_team_red_cards}}</td>
+              </tr>
+                <tr>
+                <td>Offsides</td>
+                <td>{{home_team_offsides}}</td>
+                <td>{{away_team_offsides}}</td>
+              </tr>
+                <tr>
+                <td>Corners</td>
+                <td>{{home_team_corners}}</td>
+                <td>{{away_team_corners}}</td>
               </tr>
             </table>
 
