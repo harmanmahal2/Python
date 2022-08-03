@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Leagues </h1>
+    <p>
+        {% for league in leagues %}
+
+        <li>
+            <a href="{% url 'match_results:league' league.id %}">{{ league }}</a>
+        </li>
+
+
+
+        {% endfor %}
+
+
+    </p>
+
+
+</h1>
+
+
+{% endblock %}

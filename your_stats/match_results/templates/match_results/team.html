@@ -2,10 +2,42 @@
 
 {% block content %}
 
+<style type="text/css">
+   .split {
+  height: 70%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 15%;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Control the left side */
+.left {
+  left: 15%;
+
+}
+
+/* Control the right side */
+.right {
+  right: 5%;
+
+}
+
+
+
+
+</style>
+
+
     <h2> Team: {{ team }} </h2>
 
-     <br>
 
+<h5> Team Info goes here</h5>
+    <br>
+    <br>
+<div class="split left">
     <h3> Players: </h3>
 
 
@@ -20,5 +52,28 @@
         {% endfor %}
         </uL>
 
+
+
+
+</div>
+
+
+<div class="split right">
+
+    <h3> Matches: </h3>
+
+
+        <ul>
+        {% for match in matches %}
+            <li>
+                <a href="{% url 'match_results:match' match.id %}">{{ match }}</a>
+            </li>
+
+        {% empty %}
+            <li> There are no matches added for this team.</li>
+        {% endfor %}
+        </uL>
+
+</div>
 
 {% endblock %}

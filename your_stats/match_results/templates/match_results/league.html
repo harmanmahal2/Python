@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h5> {{league}} Teams</h5>
+
+    {% for team in teams %}
+    <ul>
+        <a href="{% url 'match_results:team' team.id %}">{{ team }}</a>
+    </uL>
+
+
+    {% endfor %}
+<h5> {{league}} Matches:</h5>
+
+{% for match in matches %}
+
+        <li>
+            <a href="{% url 'match_results:match' match.id %}">{{ match }}</a>
+        </li>
+
+{% endfor %}
+
+
+{% endblock %}

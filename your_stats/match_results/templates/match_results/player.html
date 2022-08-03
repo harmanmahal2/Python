@@ -8,9 +8,14 @@
 
     <ul>
         <li> Full Name : {{ player.player_name }} </li>
-        <li> Player Number : {{ player.player_number }} </li>
-        <li> Player Nation : {{ player.player_nation }} </li>
+        <li>
+             Team : <a href="{% url 'match_results:team' player.player_team.id %}">{{ player.player_team }}</a>
+        </li>
+        <li> Number : {{ player.player_number }} </li>
+        <li> Nation : {{ player.player_nation }} </li>
         <li> Goals (Home) : {{ total_home_goals }}</li>
+        <li> Goals (Away) : {{ total_away_goals }} </li>
+        <li> Total Goals: {{ total_goals }}</li>
 
     </ul>
 
