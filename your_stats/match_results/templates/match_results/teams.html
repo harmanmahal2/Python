@@ -3,6 +3,21 @@
 {% block content %}
 
 <h1> Teams </h1>
+
+  <br>
+
+    <form action="{% url 'match_results:search_teams' %}" method="GET">
+        {% csrf_token %}
+        <input type="text" required pattern="[a-zA-Z]+" required=" " title="Text only"
+               placeholder="Search for Teams"
+               name="q_teams">
+        <button type="submit" > Search </button>
+
+    </form>
+
+
+    <br>
+
     <p>
         {% for team in teams %}
 

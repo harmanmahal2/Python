@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        {% if Team2_DB != Null %}
+            <h1> You Searched For "{{ Team1_DB }}" vs "{{ Team2_DB }}"  </h1>
+        {% else %}
+            <h1> You Searched For "{{ Team1_DB }}"  </h1>
+        {% endif %}
+
+        {% if matches %}
+        <h4> Matches </h4>
+            <ul>
+                {% for match in matches %}
+                <li>
+                    <a href="{% url 'match_results:match' match.id %}">{{ match }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+
+        <h4> No match was found for the team or teams you entered.</h4>
+
+        {% endif %}
+
+    </p>
+
+
+</h1>
+
+{% endblock %}

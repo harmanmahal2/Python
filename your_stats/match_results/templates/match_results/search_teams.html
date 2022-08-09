@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if teams %}
+        <h1> You Searched For "{{ q }}"  </h1>
+
+            {% for team in teams %}
+
+            <ul>
+                <li>
+                  <a href="{%url 'match_results:team' team.id%}"> {{ team }}</a>
+                </li>
+            </ul>
+
+            {% endfor %}
+
+    {% else %}
+
+        <h1> You Searched For "{{ q }}"  </h1>
+        <p> No Teams found </p>
+
+
+
+    {% endif %}
+
+    </p>
+
+
+</h1>
+
+{% endblock %}

@@ -1,9 +1,71 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
 
+<head>
+    <title>AutoComplete</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
+        type="text/css" />
+</head>
+
+
 <h1> Matches </h1>
-    <p>
+
+   <br>
+    <p>Search for match.</p>
+    <form action="{% url 'match_results:search_matches' %}" method="GET">
+        {% csrf_token %}
+        <input type="text" id="Team1" name="Team1" required pattern="([A-zÀ-ž\s]+)"
+               title = "Text Only" placeholder="Enter a team" > vs
+    <script>
+        $(function () {
+            var availableTags = [
+                {% for team in teams %}
+            "{{team.team_name}}",
+            {% endfor %}
+    ];
+        $("#Team1").autocomplete({
+            source: availableTags
+        });
+  } );
+    </script>
+        <input type="text" id="Team2" name="Team2" placeholder="Optional">
+    <script>
+        $(function () {
+            var availableTags = [
+                {% for team in teams %}
+            "{{team.team_name}}",
+            {% endfor %}
+    ];
+        $("#Team2").autocomplete({
+            source: availableTags
+        });
+  } );
+    </script>
+
+
+        <button type="submit" > Search </button>
+
+    </form>
+
+    </form>
+
+
+
+
+    </form>
+
+<br>
+
+<h4> Recent Matches </h4>
         {% for match in matches %}
 
         <li>
