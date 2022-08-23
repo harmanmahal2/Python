@@ -4,12 +4,12 @@
 
 
         <h1> You Searched For "{{ q }}"  </h1>
-    {% if players %}
-            {% for player in players %}
+    {% if leagues %}
+            {% for league in leagues %}
 
             <ul>
                 <li>
-                    <a href="{% url 'match_results:player' player.id %}">{{ player }}</a>
+                    <a href="{% url 'match_results:league' league.id %}">{{ league }}</a>
                 </li>
             </ul>
 
@@ -17,7 +17,7 @@
 
     {% else %}
 
-        <h1> No players found </h1>
+        <h1> No Leagues found </h1>
 
 
 

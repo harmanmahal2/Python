@@ -3,8 +3,32 @@
 {% block content %}
 
 <h1> Leagues </h1>
+
+ <br>
+
+    <form action="{% url 'match_results:search_leagues' %}" method="GET">
+        {% csrf_token %}
+        <input type="text" required pattern="([A-zÀ-ž\s]+)" required=" " title="Text only"
+               placeholder="Search for Leagues"
+               name="q_leagues" id="q_leagues">
+                     <script>
+                              $(function () {
+                            var availableTags = [
+                                {% for league in leagues %}
+                            "{{league.league_name}}",
+                            {% endfor %}
+                                 ];
+                         $("#q_leagues").autocomplete({
+                            source: availableTags
+                                 });
+                                } );
+                      </script>
+
+        <button type="submit" > Search </button>
+
+    </form>
     <p>
-        {% for league in leagues %}
+        {% for league in limit_leagues %}
 
         <li>
             <a href="{% url 'match_results:league' league.id %}">{{ league }}</a>

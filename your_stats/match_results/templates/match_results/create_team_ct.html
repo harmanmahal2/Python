@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p> Add a team </p>
+
+<form action="{% url 'match_results:create_team_ct' %}" method="POST">
+{% csrf_token %}
+    <p>
+        {{ form.as_p }}
+
+        <button type="submit" name="add_another_team" > Add another Team </button>
+
+    </p>
+</form>
+
+
+    <form action="{% url 'match_results:create_team_ct' %}" method="POST">
+    {% csrf_token %}
+
+        {% if count >= 4 %}
+        <button type="submit" name="finish_adding_teams" > Finish Adding Teams </button>
+        {% else %}
+        <p> Add at least 4 teams to continue </p>
+        {% endif %}
+
+    </form>
+
+    <p> Teams added so far:</p>
+        {% for team in teams %}
+    <li>
+
+        <ul>{{ team }}</ul>
+
+    </li>
+    {% endfor %}
+{% endblock %}

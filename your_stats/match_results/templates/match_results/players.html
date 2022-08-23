@@ -2,15 +2,32 @@
 
 {% block content %}
 
+
+
+
 <h1> Players </h1>
+
 
     <br>
 
     <form action="{% url 'match_results:search_players' %}" method="GET">
         {% csrf_token %}
-        <input type="text" required pattern="[a-zA-Z]+" required=" " title="Text only"
+        <input type="text" required pattern="([A-zÀ-ž\s]+)" required=" " title="Text only"
                placeholder="Search for players"
-               name="q_players">
+               name="q_players" id="q_players">
+        <script>
+            $(function () {
+            var availableTags = [
+                {% for player in players %}
+            "{{player.player_name}}",
+            {% endfor %}
+            ];
+             $("#q_players").autocomplete({
+            source: availableTags
+                });
+              } );
+        </script>
+
         <button type="submit" > Search </button>
 
     </form>
@@ -19,7 +36,7 @@
     <br>
 
     <p>
-        {% for player in players %}
+        {% for player in limit_players %}
 
         <li>
             <a href="{% url 'match_results:player' player.id %}">{{ player }}</a>

@@ -2,15 +2,32 @@
 
 {% block content %}
 
+
+
+
 <h1> Teams </h1>
 
   <br>
 
     <form action="{% url 'match_results:search_teams' %}" method="GET">
         {% csrf_token %}
-        <input type="text" required pattern="[a-zA-Z]+" required=" " title="Text only"
+        <input type="text" required pattern="([A-zÀ-ž\s]+)" required=" " title="Text only"
                placeholder="Search for Teams"
-               name="q_teams">
+               name="q_teams" id="q_teams">
+
+          <script>
+            $(function () {
+            var availableTags = [
+                {% for team in teams %}
+            "{{team.team_name}}",
+            {% endfor %}
+            ];
+             $("#q_teams").autocomplete({
+            source: availableTags
+                });
+              } );
+        </script>
+
         <button type="submit" > Search </button>
 
     </form>
@@ -19,7 +36,7 @@
     <br>
 
     <p>
-        {% for team in teams %}
+        {% for team in limit_teams %}
 
         <li>
             <a href="{% url 'match_results:team' team.id %}">{{ team }}</a>
